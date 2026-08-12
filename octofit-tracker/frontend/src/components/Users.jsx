@@ -1,6 +1,6 @@
-import { apiUrl, useApiCollection } from '../api.js'
+import { apiBaseUrl, useApiCollection } from '../api.js'
 
-const usersApiUrl = apiUrl('users')
+const usersApiUrl = `${apiBaseUrl}/api/users/`
 
 function Users() {
   const { items, error, isLoading } = useApiCollection(usersApiUrl)
