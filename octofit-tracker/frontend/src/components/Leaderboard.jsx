@@ -1,7 +1,9 @@
 import { apiBaseUrl, useApiCollection } from '../api.js'
 import { Message } from './Users.jsx'
 
-const leaderboardApiUrl = `${apiBaseUrl}/api/leaderboard/`
+const leaderboardApiUrl = import.meta.env.VITE_CODESPACE_NAME
+	? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`
+	: `${apiBaseUrl}/api/leaderboard/`
 
 function Leaderboard() { const { items, error, isLoading } = useApiCollection(leaderboardApiUrl); return <section><header className="page-heading"><div><p>Challenge standings</p><h1>Leaderboard</h1><span>This week's community leaders, ranked by points.</span></div><b>Live rankings</b></header><div className="data-panel leaderboard">{isLoading ? <Message>Loading leaderboard...</Message> : error ? <Message error={error} /> : items.map((entry, index) => { const user = entry.userId || entry.user || {}; return <div className="leaderboard-row" key={entry._id || entry.id}><em>{index + 1}</em><i className="avatar">{user.name?.[0] || '?'}</i><div><strong>{user.name || 'Unknown member'}</strong><small>{user.email}</small></div><b>{entry.score?.toLocaleString() || 0} pts</b></div> })}</div></section> }
 export default Leaderboard

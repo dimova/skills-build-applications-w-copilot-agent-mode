@@ -1,6 +1,8 @@
 import { apiBaseUrl, useApiCollection } from '../api.js'
 
-const usersApiUrl = `${apiBaseUrl}/api/users/`
+const usersApiUrl = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/users/`
+  : `${apiBaseUrl}/api/users/`
 
 function Users() {
   const { items, error, isLoading } = useApiCollection(usersApiUrl)
